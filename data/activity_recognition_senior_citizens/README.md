@@ -26,3 +26,7 @@ label: annotated activity code
 6. standing
 7. sitting
 8. lying
+
+
+## Kaggle Link
+https://www.kaggle.com/datasets/anshtanwar/adult-subjects-70-95-years-activity-recognition

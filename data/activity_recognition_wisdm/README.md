@@ -49,3 +49,6 @@ Jennifer R. Kwapisz, Gary M. Weiss and Samuel A. Moore (2010).
 Proceedings of the Fourth International Workshop on
 Knowledge Discovery from Sensor Data (at KDD-10), Washington
 DC.
+
+## Kaggle Link
+https://www.kaggle.com/datasets/die9origephit/human-activity-recognition
