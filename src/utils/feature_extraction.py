@@ -5,8 +5,9 @@ import pandas as pd
 from scipy import stats
 
 
-def moving_window(data: Union[np.ndarray, pd.Series], window: float,
-                  step: float):
+def _moving_window(
+    data: Union[np.ndarray, pd.Series], window: float, step: float
+) -> np.ndarray:
     """
     Segment data into overlapping windows(if the window and step are equal,
     there is no overlap)
@@ -29,8 +30,8 @@ def moving_window(data: Union[np.ndarray, pd.Series], window: float,
     data_flat = data.flatten()
 
     num_windows = int((len(data_flat) - window) / step + 1)
-    indexer = np.arange(window)[None, :] + step * np.arange(num_windows
-                                                            )[:, None]
+    indexer = np.arange(window)[None, :] + step * np.arange(
+        num_windows)[:, None]
     slide = data_flat[indexer]
     one_column = np.concatenate((one_column, slide))
     one_column.astype("float32")
@@ -42,7 +43,7 @@ def generate_labels(
     label_column: str,
     win_length: float,
     overlap: float,
-):
+) -> np.ndarray:
     """
     Generate labels for the segmented data
     :param data: data to segment
@@ -51,13 +52,14 @@ def generate_labels(
     :param overlap: window overlap
     :return: labels for the segmented data
     """
-    labels = moving_window(data[label_column], win_length, overlap)
+    labels = _moving_window(data[label_column], win_length, overlap)
     labels = np.apply_along_axis(lambda x: stats.mode(x).mode, 1, labels)
     return labels
 
 
-def calculate_statistical_features(data: Union[np.ndarray, pd.Series],
-                                   column: str):
+def _calculate_statistical_features(
+    data: Union[np.ndarray, pd.Series], column: str
+) -> pd.DataFrame:
     """
     Calculate statistical features for the segmented data
     :param data: segmented data
@@ -105,11 +107,11 @@ def calculate_statistical_features(data: Union[np.ndarray, pd.Series],
 
 def calculate_features(
     data: pd.Series, columns: List[str], win_length: float, overlap: float
-):
+) -> pd.DataFrame:
     data_with_features_task = pd.DataFrame()
     for column in columns:
-        segmented_sensor_data = moving_window(data[column], win_length,
-                                              overlap)
+        segmented_sensor_data = _moving_window(data[column], win_length, 
+                                               overlap)
         segmented_sensor_data = pd.DataFrame(
             segmented_sensor_data, columns=[str(i) for i in range(win_length)]
         )
@@ -120,7 +122,7 @@ def calculate_features(
         ]
         segmented_sensor_data = segmented_sensor_data[column_order]
 
-        data_with_features_temp = calculate_statistical_features(
+        data_with_features_temp = _calculate_statistical_features(
             segmented_sensor_data.iloc[:, 1:].values, column
         )
         data_with_features_task = pd.concat(

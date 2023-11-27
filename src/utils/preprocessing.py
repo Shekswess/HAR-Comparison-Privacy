@@ -26,7 +26,7 @@ def _filter_design(
     fs: float,
     ftype: str = "butter",
     output: str = "ba",
-):
+) -> Union[np.ndarray, tuple]:
     """
     Design a filter using scipy.signal
     :param order: filter order
@@ -49,7 +49,7 @@ def _filter_signal(
     data: Union[np.ndarray, pd.Series],
     fcoefs: Union[np.ndarray, tuple],
     zero_phase=True,
-):
+) -> Union[np.ndarray, pd.Series]:
     """
     Filter a signal using scipy.signal
     :param data: signal to filter
@@ -87,7 +87,7 @@ def lowpass_filter(
     ftype: str = "butter",
     output: str = "ba",
     zero_phase: bool = True,
-):
+) -> Union[np.ndarray, pd.Series]:
     """
     Lowpass filter a signal using scipy.signal
     :param data: signal to filter
