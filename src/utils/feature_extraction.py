@@ -30,8 +30,7 @@ def _moving_window(
     data_flat = data.flatten()
 
     num_windows = int((len(data_flat) - window) / step + 1)
-    indexer = np.arange(window)[None, :] + step * np.arange(
-        num_windows)[:, None]
+    indexer = np.arange(window)[None, :] + step * np.arange(num_windows)[:, None]
     slide = data_flat[indexer]
     one_column = np.concatenate((one_column, slide))
     one_column.astype("float32")
@@ -105,27 +104,90 @@ def _calculate_statistical_features(
     return pd.DataFrame(statistical_features, columns=feature_names)
 
 
+def _calculate_frequency_features(
+    data: Union[np.ndarray, pd.Series], column: str
+) -> pd.DataFrame:
+    """
+    Calculate frequency features for the segmented data
+    :param data: segmented data
+    :param column: column name
+    :return: frequency features
+    """
+    if not isinstance(data, (pd.DataFrame, np.ndarray)):
+        print("Data not in right format")
+        return None
+    elif isinstance(data, pd.DataFrame):
+        data = data.values
+
+    fft = np.fft.fft(data)
+    freq = np.fft.fftfreq(data.shape[1])
+    fft = fft[:, freq >= 0]
+    freq = freq[freq >= 0]
+
+    mean_freq = np.mean(freq * abs(fft), axis=1).reshape((-1, 1))
+    std_freq = np.std(freq * abs(fft), axis=1).reshape((-1, 1))
+    max_freq = np.amax(freq * abs(fft), axis=1).reshape((-1, 1))
+    max_freq_mag = np.amax(abs(fft), axis=1).reshape((-1, 1))
+    freq_mean = np.mean(abs(fft), axis=1).reshape((-1, 1))
+    freq_std = np.std(abs(fft), axis=1).reshape((-1, 1))
+    freq_skew = stats.skew(abs(fft), axis=1).reshape((-1, 1))
+    freq_kurtosis = stats.kurtosis(abs(fft), axis=1).reshape((-1, 1))
+
+    frequency_features = np.hstack(
+        (
+            mean_freq,
+            std_freq,
+            max_freq,
+            max_freq_mag,
+            freq_mean,
+            freq_std,
+            freq_skew,
+            freq_kurtosis,
+        )
+    )
+
+    feature_names = [
+        "mean_freq",
+        "std_freq",
+        "max_freq",
+        "max_freq_mag",
+        "freq_mean",
+        "freq_std",
+        "freq_skew",
+        "freq_kurtosis",
+    ]
+    feature_names = [f"{column}_{feature}" for feature in feature_names]
+
+    return pd.DataFrame(frequency_features, columns=feature_names)
+
+
 def calculate_features(
     data: pd.Series, columns: List[str], win_length: float, overlap: float
 ) -> pd.DataFrame:
     data_with_features_task = pd.DataFrame()
     for column in columns:
-        segmented_sensor_data = _moving_window(data[column], win_length, 
-                                               overlap)
+        segmented_sensor_data = _moving_window(data[column], win_length, overlap)
         segmented_sensor_data = pd.DataFrame(
             segmented_sensor_data, columns=[str(i) for i in range(win_length)]
         )
-        segmented_sensor_data["index"] = np.arange(
-            segmented_sensor_data.shape[0])
+        segmented_sensor_data["index"] = np.arange(segmented_sensor_data.shape[0])
         column_order = ["index"] + [
             str(x) for x in range(segmented_sensor_data.shape[1] - 1)
         ]
         segmented_sensor_data = segmented_sensor_data[column_order]
 
-        data_with_features_temp = _calculate_statistical_features(
+        data_with_features_temp_stat = _calculate_statistical_features(
+            segmented_sensor_data.iloc[:, 1:].values, column
+        )
+        data_with_features_temp_freq = _calculate_frequency_features(
             segmented_sensor_data.iloc[:, 1:].values, column
         )
         data_with_features_task = pd.concat(
-            [data_with_features_task, data_with_features_temp], axis=1
+            [
+                data_with_features_task,
+                data_with_features_temp_stat,
+                data_with_features_temp_freq,
+            ],
+            axis=1,
         )
     return data_with_features_task
