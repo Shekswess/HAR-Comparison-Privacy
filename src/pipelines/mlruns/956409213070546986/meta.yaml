@@ -1,0 +1,6 @@
+artifact_location: file:///D:/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/956409213070546986
+creation_time: 1701205970070
+experiment_id: '956409213070546986'
+last_update_time: 1701205970070
+lifecycle_stage: active
+name: wisdm_less_classes_frequency_features_80_20
