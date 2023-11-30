@@ -30,8 +30,7 @@ def _moving_window(
     data_flat = data.flatten()
 
     num_windows = int((len(data_flat) - window) / step + 1)
-    indexer = np.arange(window)[None, :] + step * np.arange(
-        num_windows)[:, None]
+    indexer = np.arange(window)[None, :] + step * np.arange(num_windows)[:, None]
     slide = data_flat[indexer]
     one_column = np.concatenate((one_column, slide))
     one_column.astype("float32")
@@ -163,17 +162,19 @@ def _calculate_frequency_features(
 
 
 def calculate_features(
-    data: pd.Series, columns: List[str], win_length: float, overlap: float
+    data: pd.Series,
+    columns: List[str],
+    win_length: float,
+    overlap: float,
+    statistic_only: bool = False,
 ) -> pd.DataFrame:
     data_with_features_task = pd.DataFrame()
     for column in columns:
-        segmented_sensor_data = _moving_window(data[column], win_length, 
-                                               overlap)
+        segmented_sensor_data = _moving_window(data[column], win_length, overlap)
         segmented_sensor_data = pd.DataFrame(
             segmented_sensor_data, columns=[str(i) for i in range(win_length)]
         )
-        segmented_sensor_data["index"] = np.arange(
-            segmented_sensor_data.shape[0])
+        segmented_sensor_data["index"] = np.arange(segmented_sensor_data.shape[0])
         column_order = ["index"] + [
             str(x) for x in range(segmented_sensor_data.shape[1] - 1)
         ]
@@ -182,9 +183,13 @@ def calculate_features(
         data_with_features_temp_stat = _calculate_statistical_features(
             segmented_sensor_data.iloc[:, 1:].values, column
         )
-        data_with_features_temp_freq = _calculate_frequency_features(
-            segmented_sensor_data.iloc[:, 1:].values, column
-        )
+        if not statistic_only:
+            data_with_features_temp_freq = _calculate_frequency_features(
+                segmented_sensor_data.iloc[:, 1:].values, column
+            )
+        else:
+            data_with_features_temp_freq = pd.DataFrame()
+        
         data_with_features_task = pd.concat(
             [
                 data_with_features_task,
