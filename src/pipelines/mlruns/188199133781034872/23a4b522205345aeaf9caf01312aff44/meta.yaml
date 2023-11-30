@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/188199133781034872/23a4b522205345aeaf9caf01312aff44/artifacts
+end_time: 1701358370553
+entry_point_name: ''
+experiment_id: '188199133781034872'
+lifecycle_stage: active
+run_id: 23a4b522205345aeaf9caf01312aff44
+run_name: RandomForest
+run_uuid: 23a4b522205345aeaf9caf01312aff44
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1701358370446
+status: 3
+tags: []
+user_id: jakim
