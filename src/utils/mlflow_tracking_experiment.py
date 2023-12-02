@@ -28,7 +28,7 @@ def _log_confusion_matrix(confusion_matrix_path: str):
     ml.log_artifact(confusion_matrix_path)
 
 
-def _log_test_n_pred(test: Union[np.ndarray, List], 
+def _log_test_n_pred(test: Union[np.ndarray, List],
                      pred: Union[np.ndarray, List]):
     """
     Log the test and pred values in MLFlow
@@ -70,7 +70,7 @@ def train_test_log(
     test_subjects: List,
 ):
     """
-    Log the test, pred, accuracy, f1, confusion matrix, 
+    Log the test, pred, accuracy, f1, confusion matrix,
     train and test subjects in MLFlow
     :param test: List of test values
     :param pred: List of pred values

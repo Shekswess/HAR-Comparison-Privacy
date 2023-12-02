@@ -22,10 +22,18 @@ if __name__ == "__main__":
     data = pd.read_csv(path)
     subject_column = "User_ID"
     label_column = "Label"
-    labels = data[label_column].unique()
+    labels = {
+        1: "Walking",
+        2: "Shuffling",
+        3: "Upstairs",
+        4: "Downstairs",
+        5: "Standing",
+        6: "Sitting",
+        7: "Lying",
+    }
     create_experiment("senior_citizens_80_20")
     set_experiment("senior_citizens_80_20")
-    algo_types = ["RandomForest", "XGBoost", "LightGBM"]
+    algo_types = ["XGBoost", "LightGBM"]
     for algo_type in tqdm(algo_types, desc="Algo Types", total=len(algo_types)):
         print("\nAlgo Type: ", algo_type)
         y_test, y_pred, accuracy, f1, train_sub, test_sub = train_test_validation(

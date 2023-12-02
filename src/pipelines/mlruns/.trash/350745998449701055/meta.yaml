@@ -1,0 +1,7 @@
+artifact_location: file:///D:/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/350745998449701055
+creation_time: 1701391187062
+experiment_id: '350745998449701055'
+last_update_time: 1701391386111
+lifecycle_stage: active
+name: mHealth_less_classes_frequency_features_80_20
+tags: {}

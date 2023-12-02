@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/350745998449701055/e62d80721dd44c08b3c0215ca9b95732/artifacts
+end_time: 1701391219133
+entry_point_name: ''
+experiment_id: '350745998449701055'
+lifecycle_stage: active
+run_id: e62d80721dd44c08b3c0215ca9b95732
+run_name: LightGBM
+run_uuid: e62d80721dd44c08b3c0215ca9b95732
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1701391219022
+status: 3
+tags: []
+user_id: jakim

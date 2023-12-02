@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/114508729193565367/b678c7daded64d1c965222ff2f38ed86/artifacts
+end_time: 1701388724240
+entry_point_name: ''
+experiment_id: '114508729193565367'
+lifecycle_stage: active
+run_id: b678c7daded64d1c965222ff2f38ed86
+run_name: XGBoost
+run_uuid: b678c7daded64d1c965222ff2f38ed86
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1701388724160
+status: 3
+tags: []
+user_id: jakim

@@ -30,7 +30,8 @@ def _moving_window(
     data_flat = data.flatten()
 
     num_windows = int((len(data_flat) - window) / step + 1)
-    indexer = np.arange(window)[None, :] + step * np.arange(num_windows)[:, None]
+    indexer = np.arange(window)[None, :] + step * np.arange(
+        num_windows)[:, None]
     slide = data_flat[indexer]
     one_column = np.concatenate((one_column, slide))
     one_column.astype("float32")
@@ -168,13 +169,24 @@ def calculate_features(
     overlap: float,
     statistic_only: bool = False,
 ) -> pd.DataFrame:
+    """
+    Calculate statistical and frequency features for the segmented data
+    :param data: data to segment
+    :param columns: column names
+    :param win_length: window length
+    :param overlap: window overlap
+    :param statistic_only: if True, only calculate statistical features
+    :return: statistical and frequency features
+    """
     data_with_features_task = pd.DataFrame()
     for column in columns:
-        segmented_sensor_data = _moving_window(data[column], win_length, overlap)
+        segmented_sensor_data = _moving_window(data[column], win_length,
+                                               overlap)
         segmented_sensor_data = pd.DataFrame(
             segmented_sensor_data, columns=[str(i) for i in range(win_length)]
         )
-        segmented_sensor_data["index"] = np.arange(segmented_sensor_data.shape[0])
+        segmented_sensor_data["index"] = np.arange(
+            segmented_sensor_data.shape[0])
         column_order = ["index"] + [
             str(x) for x in range(segmented_sensor_data.shape[1] - 1)
         ]
@@ -189,7 +201,7 @@ def calculate_features(
             )
         else:
             data_with_features_temp_freq = pd.DataFrame()
-        
+
         data_with_features_task = pd.concat(
             [
                 data_with_features_task,
