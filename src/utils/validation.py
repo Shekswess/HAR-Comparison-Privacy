@@ -35,8 +35,10 @@ def train_test_validation(
 
     subjects = data[subject_column].unique()
     random.seed(42)
-    train_subjects = random.sample(list(subjects), int(len(subjects) * train_ratio))
-    test_subjects = [subject for subject in subjects if subject not in train_subjects]
+    train_subjects = random.sample(list(subjects), int(
+        len(subjects) * train_ratio))
+    test_subjects = [subject for subject in subjects
+                     if subject not in train_subjects]
 
     label_encoder = LabelEncoder()
 
