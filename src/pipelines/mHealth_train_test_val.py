@@ -6,11 +6,8 @@ import pandas as pd
 sys.path.append(os.path.abspath(os.path.join("..")))
 from tqdm import tqdm
 
-from utils.mlflow_tracking_experiment import (
-    create_experiment,
-    set_experiment,
-    train_test_log,
-)
+from utils.mlflow_tracking_experiment import (create_experiment,
+                                              set_experiment, train_test_log)
 from utils.validation import train_test_validation
 from utils.vizualizations import confusion_matrix_heatmap
 
@@ -22,10 +19,24 @@ if __name__ == "__main__":
     data = pd.read_csv(path)
     subject_column = "User_ID"
     label_column = "Label"
-    labels = data[label_column].unique()
+    labels = {
+        0: "No activity",
+        1: "Standing",
+        2: "Sitting",
+        3: "Lying",
+        4: "Walking",
+        5: "Stairs",
+        6: "Bending",
+        7: "Arms Raised",
+        8: "Knees Bending",
+        9: "Cycling",
+        10: "Jogging",
+        11: "Running",
+        12: "Jumping"
+    }
     create_experiment("mHealth_80_20")
     set_experiment("mHealth_80_20")
-    algo_types = ["RandomForest", "XGBoost", "LightGBM"]
+    algo_types = ["XGBoost", "LightGBM"]
     for algo_type in tqdm(algo_types, desc="Algo Types", total=len(algo_types)):
         print("\nAlgo Type: ", algo_type)
         y_test, y_pred, accuracy, f1, train_sub, test_sub = train_test_validation(
