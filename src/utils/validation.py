@@ -35,8 +35,10 @@ def train_test_validation(
 
     subjects = data[subject_column].unique()
     random.seed(42)
-    train_subjects = random.sample(list(subjects), int(len(subjects) * train_ratio))
-    test_subjects = [subject for subject in subjects if subject not in train_subjects]
+    train_subjects = random.sample(list(subjects), 
+                                   int(len(subjects) * train_ratio))
+    test_subjects = [subject for subject in subjects 
+                     if subject not in train_subjects]
 
     label_encoder = LabelEncoder()
 
@@ -81,7 +83,8 @@ def leave_one_subject_out_validation(
     :param subject_column: Column name of the subject
     :param label_column: Column name of the label
     :param algo_type: Type of algorithm
-    :return: List of test, pred, accuracy, auc, f1, test_subjects, mean_accuracy, mean_f1
+    :return: List of test, pred, accuracy, auc, f1, test_subjects,
+    mean_accuracy, mean_f1
     """
     if algo_type == "RandomForest":
         algo = RandomForestClassifier()
@@ -101,11 +104,11 @@ def leave_one_subject_out_validation(
     accuracy_list = []
     f1_list = []
     test_subjects_list = []
-    y_tests = []
-    y_preds = []
 
     for subject in subjects:
-        train_subjects = [subject_ for subject_ in subjects if subject_ != subject]
+        print(f"Subject: {subject}")
+        train_subjects = [subject_ for subject_ in subjects
+                          if subject_ != subject]
         test_subjects = [subject]
 
         X_train = data[data[subject_column].isin(train_subjects)].drop(
@@ -127,8 +130,6 @@ def leave_one_subject_out_validation(
         accuracy = accuracy_score(y_test, y_pred)
         f1 = f1_score(y_test, y_pred, average="macro")
 
-        y_tests.append(y_test)
-        y_preds.append(y_pred)
         accuracy_list.append(accuracy)
         f1_list.append(f1)
         test_subjects_list.append(test_subjects)
@@ -137,8 +138,6 @@ def leave_one_subject_out_validation(
     mean_f1 = sum(f1_list) / len(f1_list)
 
     return (
-        y_tests,
-        y_preds,
         accuracy_list,
         f1_list,
         test_subjects_list,
