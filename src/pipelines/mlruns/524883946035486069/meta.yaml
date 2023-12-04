@@ -1,0 +1,6 @@
+artifact_location: file:///home/bojan-emteq/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/524883946035486069
+creation_time: 1701696262117
+experiment_id: '524883946035486069'
+last_update_time: 1701696262117
+lifecycle_stage: active
+name: mHealth_less_classes_frequency_features_LOSCV

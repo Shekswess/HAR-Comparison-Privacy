@@ -67,6 +67,24 @@ def _log_subjects(train_subjects: List, test_subjects: List):
     ml.log_param("Test-Subjects", test_subjects)
 
 
+def _log_test_subjects(test_subjects: List):
+    """
+    Log the test subjects in MLFlow
+    :param test_subjects: List of test subjects
+    """
+    ml.log_param("Test-Subjects", test_subjects)
+
+
+def _log_accuracy_n_f1_list(accuracy_list: List[float], f1_list: List[float]):
+    """
+    Log the accuracy and f1 values in MLFlow
+    :param accuracy: Accuracy value
+    :param f1: F1 value
+    """
+    ml.log_param("Accuracy-List", accuracy_list)
+    ml.log_param("F1-Macro-List", f1_list)
+
+
 def _log_average_accuracy_n_f1_list(
     average_accuracy_list: List[float], average_f1_list: List[float]
 ):
@@ -164,4 +182,30 @@ def train_test_log(
     _log_test_n_pred(test, pred)
     _log_accuracy_n_f1(accuracy, f1)
     _log_confusion_matrix(confusion_matrix_path)
+    ml.end_run()
+
+
+def loso_log(
+    run_name: str,
+    accuracies: List[float],
+    f1s: List[float],
+    test_subjects: List,
+    average_accuracy: float,
+    average_f1: float,
+):
+    """
+    Log the test, pred, accuracies, f1s, test subjects,
+    average accuracy and average f1 in MLFlow
+    :param test: List of test values
+    :param pred: List of pred values
+    :param accuracies: List of accuracies
+    :param f1s: List of f1s
+    :param test_subjects: List of test subjects
+    :param average_accuracy: Average accuracy value
+    :param average_f1: Average F1 value
+    """
+    ml.start_run(run_name=run_name)
+    _log_average_accuracy_n_f1(average_accuracy, average_f1)
+    _log_accuracy_n_f1_list(accuracies, f1s)
+    _log_test_subjects(test_subjects)
     ml.end_run()
