@@ -68,7 +68,7 @@ The class labels are uniform for all datasets:
 
 
 ## Experiments
-We have 3 different experiments:
+We have 4 different experiments:
 
 1. Experiment 1
 On each dataset is performed simple ML pipeline with 2 different classifiers and the data is preprocessed with Preprocessing 1. 
@@ -100,7 +100,17 @@ The pipeline is:
 
 The best results are for the mHealth dataset
 
-3. Experiment 3
+3. Expreriment 3
+The best and most stable dataset(results)=mHealth from Expreriment 2 is used for this experiment, so the data is preprocessed with Preprocessing 2.
+On the dataset is performed Leave One Subject Out Cross Validation(LOSCV) with XGBoost Boosting Classifier and LightGBM Boosting Classifier.
+The dataset has 10 subjects and each subject is used as a test set and the rest of the subjects are used as a train set.
+
+The pipeline is:
+- Looping through all subjects
+- Training the classifier on the train set(subjects-1) for each subject and evaluating on the test set(subject)
+- Getting accuracy, f1-score macro for each subject and averaging them
+
+4. Experiment 4
 The best and most stable dataset(results)=mHealth from Expreriment 2 is used for this experiment, so the data is preprocessed with Preprocessing 2.
 On the dataset is performed federated learning pipeline with XGBoost Boosting Classifier.
 The dataset has 10 users and each user is a possible client.
@@ -171,6 +181,7 @@ The structure of the repository is:
 │   │   ├── mlruns                                                                      # Contains the results for each experiment
 │   │   ├── mHealth_federated.py                                                        # Contains the mHealth federated learning pipeline      
 │   │   ├── mHealth_less_classes_freq_train_test_val.py                                 # Contains the mHealth train/test validation pipeline with less classes and frequency features
+│   │   ├── mHealth_LOSCV.py                                                            # Contains the mHealth LOSCV pipeline
 │   │   ├── mHealth_train_test_val.py                                                   # Contains the mHealth train/test validation pipeline
 │   │   ├── senior_citizens_less_classes_freq_train_test_val.py                         # Contains the Senior Citizens train/test validation pipeline with less classes and frequency features
 │   │   ├── senior_citizens_train_test_val.py                                           # Contains the Senior Citizens train/test validation pipeline
