@@ -1,7 +1,0 @@
-artifact_location: file:///D:/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/677565981465343783
-creation_time: 1701392917954
-experiment_id: '677565981465343783'
-last_update_time: 1701521763009
-lifecycle_stage: active
-name: FLAAP_less_classes_frequency_features_80_20
-tags: {}

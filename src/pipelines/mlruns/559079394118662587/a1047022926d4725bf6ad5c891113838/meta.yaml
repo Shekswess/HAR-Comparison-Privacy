@@ -1,0 +1,15 @@
+artifact_uri: file://D:\Work\HAR-Comparison-Privacy\src\pipelines\mlruns/559079394118662587/a1047022926d4725bf6ad5c891113838/artifacts
+end_time: 1701622441809
+entry_point_name: ''
+experiment_id: '559079394118662587'
+lifecycle_stage: active
+run_id: a1047022926d4725bf6ad5c891113838
+run_name: xgboost_federated_8_clients_20_rounds
+run_uuid: a1047022926d4725bf6ad5c891113838
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1701622441701
+status: 3
+tags: []
+user_id: jakim

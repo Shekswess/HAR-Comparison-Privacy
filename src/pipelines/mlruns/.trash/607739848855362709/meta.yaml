@@ -1,0 +1,7 @@
+artifact_location: file://D:\Work\HAR-Comparison-Privacy\src\pipelines\mlruns/607739848855362709
+creation_time: 1701621284489
+experiment_id: '607739848855362709'
+last_update_time: 1701621542749
+lifecycle_stage: active
+name: mHealth_federated_xgboost
+tags: {}
