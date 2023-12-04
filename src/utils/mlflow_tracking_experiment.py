@@ -187,8 +187,6 @@ def train_test_log(
 
 def loso_log(
     run_name: str,
-    test: List,
-    pred: List,
     accuracies: List[float],
     f1s: List[float],
     test_subjects: List,
@@ -207,7 +205,6 @@ def loso_log(
     :param average_f1: Average F1 value
     """
     ml.start_run(run_name=run_name)
-    _log_test_n_pred(test, pred)
     _log_average_accuracy_n_f1(average_accuracy, average_f1)
     _log_accuracy_n_f1_list(accuracies, f1s)
     _log_test_subjects(test_subjects)
