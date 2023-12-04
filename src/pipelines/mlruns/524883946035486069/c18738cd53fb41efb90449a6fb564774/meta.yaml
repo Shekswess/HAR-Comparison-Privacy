@@ -1,0 +1,15 @@
+artifact_uri: file:///home/bojan-emteq/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/524883946035486069/c18738cd53fb41efb90449a6fb564774/artifacts
+end_time: 1701697697105
+entry_point_name: ''
+experiment_id: '524883946035486069'
+lifecycle_stage: active
+run_id: c18738cd53fb41efb90449a6fb564774
+run_name: LightGBM
+run_uuid: c18738cd53fb41efb90449a6fb564774
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1701697697076
+status: 3
+tags: []
+user_id: bojan-emteq
