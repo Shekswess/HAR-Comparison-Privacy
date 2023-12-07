@@ -27,7 +27,7 @@ if __name__ == "__main__":
     }
     create_experiment("mHealth_less_classes_frequency_features_80_20")
     set_experiment("mHealth_less_classes_frequency_features_80_20")
-    algo_types = ["XGBoost", "LightGBM"]
+    algo_types = ["XGBoost", "LightGBM", "RandomForest"]
     for algo_type in tqdm(algo_types, desc="Algo Types", total=len(algo_types)):
         print("\nAlgo Type: ", algo_type)
         y_test, y_pred, accuracy, f1, train_sub, test_sub = train_test_validation(

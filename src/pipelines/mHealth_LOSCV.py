@@ -17,7 +17,7 @@ if __name__ == "__main__":
     labels = {1: "Still", 2: "Walking", 3: "Stairs", 4: "Jogging"}
     create_experiment("mHealth_less_classes_frequency_features_LOSCV")
     set_experiment("mHealth_less_classes_frequency_features_LOSCV")
-    algo_types = ["XGBoost", "LightGBM"]
+    algo_types = ["XGBoost", "LightGBM", "RandomForest"]
     for algo_type in tqdm(algo_types, desc="Algo Types", total=len(algo_types)):
         print("\nAlgo Type: ", algo_type)
         (
