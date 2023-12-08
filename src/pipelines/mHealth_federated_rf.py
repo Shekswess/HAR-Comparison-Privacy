@@ -33,8 +33,8 @@ def start_client(dataset_path):
 
 
 if __name__ == "__main__":
-    dataset_path = "/home/bojan-emteq/Work/HAR-Comparison-Privacy/processed_data/activity_recognition_mHealth_less_classes_frequency_features"
-    script_path = "/home/bojan-emteq/Work/HAR-Comparison-Privacy/src/federated_rf"
+    dataset_path = r"D:\Work\HAR-Comparison-Privacy\processed_data\activity_recognition_mHealth_less_classes_frequency_features"
+    script_path = r"D:\Work\HAR-Comparison-Privacy\src\federated_rf"
     os.chdir(script_path)
 
     create_experiment("mHealth_federated_RF")
@@ -47,8 +47,8 @@ if __name__ == "__main__":
             f"Starting experiment with {number_round} rounds and {number_client} clients"
         )
         server_process = multiprocessing.Process(
-            target=start_server, args=(number_round, number_client, 
-                                       "mHealth_federated_RF")
+            target=start_server,
+            args=(number_round, number_client, "mHealth_federated_RF"),
         )
         server_process.start()
         time.sleep(15)
