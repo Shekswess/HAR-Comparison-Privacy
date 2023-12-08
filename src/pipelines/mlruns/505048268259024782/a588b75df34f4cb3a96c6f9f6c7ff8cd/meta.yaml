@@ -1,0 +1,15 @@
+artifact_uri: file:///D:\Work\HAR-Comparison-Privacy\src\pipelines\mlruns/505048268259024782/a588b75df34f4cb3a96c6f9f6c7ff8cd/artifacts
+end_time: 1702049056271
+entry_point_name: ''
+experiment_id: '505048268259024782'
+lifecycle_stage: active
+run_id: a588b75df34f4cb3a96c6f9f6c7ff8cd
+run_name: rf_federated_8_clients_8_rounds
+run_uuid: a588b75df34f4cb3a96c6f9f6c7ff8cd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1702049056116
+status: 3
+tags: []
+user_id: jakim
