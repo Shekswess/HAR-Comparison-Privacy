@@ -63,7 +63,7 @@ if __name__ == "__main__":
     experiment_name = parser.parse_args().experiment_name
 
     set_default_tracking_uri(
-        "file:////home/bojan-emteq/Work/HAR-Comparison-Privacy/src/pipelines/mlruns"
+        "file:///D:\Work\HAR-Comparison-Privacy\src\pipelines\mlruns"
     )
     set_experiment(experiment_name)
 
