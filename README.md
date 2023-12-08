@@ -112,7 +112,7 @@ The pipeline is:
 
 4. Experiment 4
 The best and most stable dataset(results)=mHealth from Expreriment 2 is used for this experiment, so the data is preprocessed with Preprocessing 2.
-On the dataset is performed federated learning pipeline with XGBoost Boosting Classifier.
+On the dataset is performed federated learning pipeline with XGBoost Boosting Classifier and Random Forest Classifier.
 The dataset has 10 users and each user is a possible client.
 
 The pipeline is:
@@ -120,7 +120,7 @@ The pipeline is:
 - Training the classifier on the train set locally for each user/client
 - Evaluating the classifier on the test set locally for each user/client
 - Getting accuracy, f1-score macro for each user/client
-- Aggregating the results for all users/clients on the server using FedXgbBagging algorithm
+- Aggregating the results for all users/clients on the server using FedXgbBagging algorithm for XGBoost and FedAvg algorithm for Random Forest
 - Getting best accuracy, best f1-score macro, average accuracy, average f1-score macro for all users/clients on the server after all rounds are finished/aggregated
 
 The combinations that are tested are:
@@ -166,10 +166,14 @@ The structure of the repository is:
 │   ├── activity_recognition_wisdm_less_classes_frequency_features                      # Contains the preprocessed WISDM data with less classes and frequency features
 │   └── activity_recognition_wisdm                                                      # Contains the preprocessed WISDM data
 ├── src                                                                                 # Contains the source code
+│   ├── federated_RF                                                                    # Contains the federated learning code
+│   │   ├── client.py                                                                   # Contains the federated RF client code
+│   │   └── server.py                                                                   # Contains the federated RF server code
 │   ├── federated_xgboost                                                               # Contains the federated xgboost server and client code
 │   │   ├── client.py                                                                   # Contains the federated xgboost client code
 │   │   └── server.py                                                                   # Contains the federated xgboost server code                           
 │   ├── figures                                                                         # Contains the figures for each experiment
+│   │   ├── federated_RF                                                                # Contains the figures for the federated Random Forest experiment
 │   │   ├── federated_xgboost                                                           # Contains the figures for the federated xgboost experiment
 │   │   ├── mHealth_80_20                                                               # Contains the figures for mHealth 80/20 experiment
 │   │   ├── mHealth_less_classes_frequency_features_80_20                               # Contains the figures for mHealth 80/20 experiment with less classes and frequency features   
