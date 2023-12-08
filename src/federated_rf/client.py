@@ -2,12 +2,9 @@ import argparse
 import warnings
 from logging import INFO
 from typing import Union
-import random
 
 import flwr as fl
-import numpy as np
 import pandas as pd
-import xgboost as xgb
 from sklearn.ensemble import RandomForestClassifier
 from flwr.common import (
     Code,
@@ -20,13 +17,22 @@ from flwr.common import (
     Parameters,
     Status,
 )
-from flwr.common.logger import log
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 
 
 class RfClient(fl.client.Client):
     def __init__(self, x_train, y_train, x_test, y_test, params, num_train, num_test):
+        """
+        Random forest client.
+        :param x_train: The training dataset.
+        :param y_train: The training labels.
+        :param x_test: The test dataset.
+        :param y_test: The test labels.
+        :param params: The parameters for training.
+        :param num_train: The number of training examples.
+        :param num_test: The number of test examples.
+        """
         self.rf = None
         self.config = None
         self.x_train = x_train
@@ -38,6 +44,11 @@ class RfClient(fl.client.Client):
         self.num_test = num_test
 
     def get_parameters(self, ins: GetParametersIns) -> GetParametersRes:
+        """
+        Return the local model parameters.
+        :param ins: GetParametersIns
+        :return: GetParametersRes
+        """
         _ = (self, ins)
         return GetParametersRes(
             status=Status(
@@ -48,6 +59,11 @@ class RfClient(fl.client.Client):
         )
 
     def fit(self, ins: FitIns) -> FitRes:
+        """
+        Train the model on the local dataset.
+        :param ins: FitIns
+        :return: FitRes
+        """
         if self.rf is None:
             self.rf = RandomForestClassifier(**self.params)
             self.rf.fit(self.x_train, self.y_train)
@@ -64,6 +80,12 @@ class RfClient(fl.client.Client):
         )
 
     def evaluate(self, ins: EvaluateIns) -> EvaluateRes:
+        """
+        Evaluate the model on the local dataset.
+        :param ins: EvaluateIns
+        :return: EvaluateRes
+        """
+
         y_pred = self.rf.predict(self.x_test)
         accuracy = accuracy_score(self.y_test, y_pred)
         f1 = f1_score(self.y_test, y_pred, average="macro")
@@ -124,19 +146,6 @@ if __name__ == "__main__":
     parser.add_argument("--client-id", type=str, help="Client ID.", required=True)
     args = parser.parse_args()
 
-    random_seeds = {
-        "user_1": 42,
-        "user_2": 43,
-        "user_3": 44,
-        "user_4": 45,
-        "user_5": 46,
-        "user_6": 47,
-        "user_7": 48,
-        "user_8": 49,
-        "user_9": 50,
-        "user_10": 51,
-    }
-
     client_id = args.client_id
     dataset_path = args.dataset_path
     df = pd.read_csv(dataset_path)
@@ -146,24 +155,12 @@ if __name__ == "__main__":
     x_train, y_train = transform_dataset_to_x_y(train_data)
     x_test, y_test = transform_dataset_to_x_y(test_data)
 
-    random.seed(random_seeds[client_id])
     params = {
-        "n_estimators": random.randint(50, 150),  # Random integer between 50 and 150
-        "max_depth": random.randint(5, 15),  # Random integer between 5 and 15
-        "min_samples_split": random.randint(2, 10),  # Random integer between 2 and 10
-        "min_samples_leaf": random.randint(1, 5),  # Random integer between 1 and 5
-        "max_features": random.choice(
-            ["sqrt", "log2"]
-        ),  # Random choice between "sqrt" and "log2"
-        "bootstrap": random.choice(
-            [True, False]
-        ),  # Random choice between True and False
-        "criterion": random.choice(
-            ["gini", "entropy", "log_loss"]
-        ),  # Random choice between "gini" and "entropy"
-        "class_weight": random.choice(
-            ["balanced", "balanced_subsample"]
-        ),  # Random choice between "balanced" and "balanced_subsample"
+        "n_estimators": 50,
+        "max_depth": 3,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1,
+        "class_weight": None,
     }
 
     num_train = x_train.shape[0]
