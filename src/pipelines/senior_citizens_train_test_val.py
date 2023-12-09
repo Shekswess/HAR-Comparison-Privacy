@@ -6,11 +6,8 @@ import pandas as pd
 sys.path.append(os.path.abspath(os.path.join("..")))
 from tqdm import tqdm
 
-from utils.mlflow_tracking_experiment import (
-    create_experiment,
-    set_experiment,
-    train_test_log,
-)
+from utils.mlflow_tracking_experiment import (create_experiment,
+                                              set_experiment, train_test_log)
 from utils.validation import train_test_validation
 from utils.vizualizations import confusion_matrix_heatmap
 
@@ -33,7 +30,7 @@ if __name__ == "__main__":
     }
     create_experiment("senior_citizens_80_20")
     set_experiment("senior_citizens_80_20")
-    algo_types = ["XGBoost", "LightGBM"]
+    algo_types = ["XGBoost", "LightGBM", "RandomForest"]
     for algo_type in tqdm(algo_types, desc="Algo Types", total=len(algo_types)):
         print("\nAlgo Type: ", algo_type)
         y_test, y_pred, accuracy, f1, train_sub, test_sub = train_test_validation(

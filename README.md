@@ -1,6 +1,6 @@
 # HAR-Comparison-Privacy
 
-This Repository contains the code for experimenting with 3 different HAR datasets and checking if they can be compared with each other. Also checking if the data can be used for privacy preserving machine learning(federated learning).
+This Repository contains the code for experimenting with 3 different HAR datasets and checking if they can be compared with each other. Also checking if the data can be used for privacy preserving machine learning(federated learning) using Random Forest and FedAve strategy + XGBoost and FedXgbBagging strategy.
 
 ## Datasets
 
@@ -41,7 +41,8 @@ Each dataset is preprocessed in the same way. The preprocessing steps are:
 - Lowpass filtering the data
 - Downsampling the dataset to 20Hz(if needed)
 - Extracting windows and extracting statistical and frequency features from the windows
-    Statistical features:
+
+Statistical features:
     - mean
     - std
     - min
@@ -51,7 +52,8 @@ Each dataset is preprocessed in the same way. The preprocessing steps are:
     - kurtosis
     - skewness
     - rms
-    Frequency features:
+
+Frequency features:
     - mean_freq
     - std_freq
     - max_freq
@@ -60,6 +62,7 @@ Each dataset is preprocessed in the same way. The preprocessing steps are:
     - freq_std
     - freq_skew
     - freq_kurtosis
+
 The class labels are uniform for all datasets:
 - Still (Not Moving, Standing Still, Sitting, Lying)
 - Walking
@@ -75,6 +78,7 @@ On each dataset is performed simple ML pipeline with 2 different classifiers and
 The classifiers used are:
 - XGBoost
 - LightGBM
+- Random Forest
 
 The pipeline is:
 - Splitting the data into train and test set(80/20)
@@ -90,6 +94,7 @@ On each dataset is performed simple ML pipeline with 2 different classifiers and
 The classifiers used are:
 - XGBoost
 - LightGBM
+- Random Forest
 
 The pipeline is:
 - Splitting the data into train and test set(80/20)
@@ -112,7 +117,7 @@ The pipeline is:
 
 4. Experiment 4
 The best and most stable dataset(results)=mHealth from Expreriment 2 is used for this experiment, so the data is preprocessed with Preprocessing 2.
-On the dataset is performed federated learning pipeline with XGBoost Boosting Classifier.
+On the dataset is performed federated learning pipeline with XGBoost Boosting Classifier and Random Forest Classifier.
 The dataset has 10 users and each user is a possible client.
 
 The pipeline is:
@@ -120,7 +125,7 @@ The pipeline is:
 - Training the classifier on the train set locally for each user/client
 - Evaluating the classifier on the test set locally for each user/client
 - Getting accuracy, f1-score macro for each user/client
-- Aggregating the results for all users/clients on the server using FedXgbBagging algorithm
+- Aggregating the results for all users/clients on the server using FedXgbBagging algorithm for XGBoost and FedAvg algorithm for Random Forest
 - Getting best accuracy, best f1-score macro, average accuracy, average f1-score macro for all users/clients on the server after all rounds are finished/aggregated
 
 The combinations that are tested are:
@@ -152,6 +157,7 @@ The structure of the repository is:
 │   ├── activity_recognition_senior_citizens                                            # Contains the Senior Citizens raw data + explanation
 │   └── activity_recognition_wisdm                                                      # Contains the WISDM raw data + explanation
 ├── notebooks                                                                           # Contains the notebooks(mostly for preprocessing)
+│   ├── datasets_exploration.ipynb                                                      # Contains the datasets exploration
 │   ├── mHealth_preprocessing_less_classes_frequency_features.ipynb                     # Contains the mHealth preprocessing with less classes and frequency features
 │   ├── mHealth_preprocessing.ipynb                                                     # Contains the mHealth preprocessing
 │   ├── senior_citizens_preprocessing_less_classes_frequency_features.ipynb             # Contains the Senior Citizens preprocessing with less classes and frequency features
@@ -166,10 +172,14 @@ The structure of the repository is:
 │   ├── activity_recognition_wisdm_less_classes_frequency_features                      # Contains the preprocessed WISDM data with less classes and frequency features
 │   └── activity_recognition_wisdm                                                      # Contains the preprocessed WISDM data
 ├── src                                                                                 # Contains the source code
+│   ├── federated_RF                                                                    # Contains the federated learning code
+│   │   ├── client.py                                                                   # Contains the federated RF client code
+│   │   └── server.py                                                                   # Contains the federated RF server code
 │   ├── federated_xgboost                                                               # Contains the federated xgboost server and client code
 │   │   ├── client.py                                                                   # Contains the federated xgboost client code
 │   │   └── server.py                                                                   # Contains the federated xgboost server code                           
 │   ├── figures                                                                         # Contains the figures for each experiment
+│   │   ├── federated_RF                                                                # Contains the figures for the federated Random Forest experiment
 │   │   ├── federated_xgboost                                                           # Contains the figures for the federated xgboost experiment
 │   │   ├── mHealth_80_20                                                               # Contains the figures for mHealth 80/20 experiment
 │   │   ├── mHealth_less_classes_frequency_features_80_20                               # Contains the figures for mHealth 80/20 experiment with less classes and frequency features   

@@ -28,13 +28,12 @@ if __name__ == "__main__":
         3: "Upstairs",
         4: "Downstairs",
         5: "Sitting",
-        6: "Standing"
+        6: "Standing",
     }
     create_experiment("wisdm_80_20")
     set_experiment("wisdm_80_20")
-    algo_types = ["XGBoost", "LightGBM"]
-    for algo_type in tqdm(algo_types,
-                          desc="Algo Types", total=len(algo_types)):
+    algo_types = ["XGBoost", "LightGBM", "RandomForest"]
+    for algo_type in tqdm(algo_types, desc="Algo Types", total=len(algo_types)):
         print("\nAlgo Type: ", algo_type)
         y_test, y_pred, accuracy, f1, train_sub, test_sub = train_test_validation(
             data, subject_column, label_column, algo_type

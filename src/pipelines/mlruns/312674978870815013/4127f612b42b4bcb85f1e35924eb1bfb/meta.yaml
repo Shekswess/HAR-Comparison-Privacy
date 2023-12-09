@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Work/HAR-Comparison-Privacy/src/pipelines/mlruns/312674978870815013/4127f612b42b4bcb85f1e35924eb1bfb/artifacts
+end_time: 1701941529920
+entry_point_name: ''
+experiment_id: '312674978870815013'
+lifecycle_stage: active
+run_id: 4127f612b42b4bcb85f1e35924eb1bfb
+run_name: RandomForest
+run_uuid: 4127f612b42b4bcb85f1e35924eb1bfb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1701941529890
+status: 3
+tags: []
+user_id: bojan-emteq
