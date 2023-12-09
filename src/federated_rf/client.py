@@ -1,28 +1,20 @@
 import argparse
 import warnings
-from logging import INFO
 from typing import Union
 
 import flwr as fl
 import pandas as pd
+from flwr.common import (Code, EvaluateIns, EvaluateRes, FitIns, FitRes,
+                         GetParametersIns, GetParametersRes, Parameters,
+                         Status)
 from sklearn.ensemble import RandomForestClassifier
-from flwr.common import (
-    Code,
-    EvaluateIns,
-    EvaluateRes,
-    FitIns,
-    FitRes,
-    GetParametersIns,
-    GetParametersRes,
-    Parameters,
-    Status,
-)
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 
 
 class RfClient(fl.client.Client):
-    def __init__(self, x_train, y_train, x_test, y_test, params, num_train, num_test):
+    def __init__(self, x_train, y_train, x_test, y_test, params, num_train,
+                 num_test):
         """
         Random forest client.
         :param x_train: The training dataset.
@@ -125,7 +117,8 @@ def train_test_split_data(
     return train_data, test_data
 
 
-def transform_dataset_to_x_y(data: pd.DataFrame):
+def transform_dataset_to_x_y(
+        data: pd.DataFrame) -> Union[pd.DataFrame, pd.DataFrame]:
     """
     Transform the dataset into DMatrix for xgboost.
     :param data: the dataset to be transformed
@@ -143,14 +136,16 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset-path", type=str, help="Path to the dataset.", required=True
     )
-    parser.add_argument("--client-id", type=str, help="Client ID.", required=True)
+    parser.add_argument("--client-id", type=str, help="Client ID.",
+                        required=True)
     args = parser.parse_args()
 
     client_id = args.client_id
     dataset_path = args.dataset_path
     df = pd.read_csv(dataset_path)
 
-    train_data, test_data = train_test_split_data(df, test_fraction=0.2, seed=42)
+    train_data, test_data = train_test_split_data(df, test_fraction=0.2,
+                                                  seed=42)
 
     x_train, y_train = transform_dataset_to_x_y(train_data)
     x_test, y_test = transform_dataset_to_x_y(test_data)
@@ -168,5 +163,6 @@ if __name__ == "__main__":
 
     fl.client.start_client(
         server_address="127.0.0.1:8080",
-        client=RfClient(x_train, y_train, x_test, y_test, params, num_train, num_test),
+        client=RfClient(x_train, y_train, x_test, y_test, params, num_train,
+                        num_test),
     )

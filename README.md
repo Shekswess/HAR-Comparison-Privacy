@@ -1,6 +1,6 @@
 # HAR-Comparison-Privacy
 
-This Repository contains the code for experimenting with 3 different HAR datasets and checking if they can be compared with each other. Also checking if the data can be used for privacy preserving machine learning(federated learning).
+This Repository contains the code for experimenting with 3 different HAR datasets and checking if they can be compared with each other. Also checking if the data can be used for privacy preserving machine learning(federated learning) using Random Forest and FedAve strategy + XGBoost and FedXgbBagging strategy.
 
 ## Datasets
 
@@ -41,7 +41,8 @@ Each dataset is preprocessed in the same way. The preprocessing steps are:
 - Lowpass filtering the data
 - Downsampling the dataset to 20Hz(if needed)
 - Extracting windows and extracting statistical and frequency features from the windows
-    Statistical features:
+
+Statistical features:
     - mean
     - std
     - min
@@ -51,7 +52,8 @@ Each dataset is preprocessed in the same way. The preprocessing steps are:
     - kurtosis
     - skewness
     - rms
-    Frequency features:
+
+Frequency features:
     - mean_freq
     - std_freq
     - max_freq
@@ -60,6 +62,7 @@ Each dataset is preprocessed in the same way. The preprocessing steps are:
     - freq_std
     - freq_skew
     - freq_kurtosis
+
 The class labels are uniform for all datasets:
 - Still (Not Moving, Standing Still, Sitting, Lying)
 - Walking
@@ -75,6 +78,7 @@ On each dataset is performed simple ML pipeline with 2 different classifiers and
 The classifiers used are:
 - XGBoost
 - LightGBM
+- Random Forest
 
 The pipeline is:
 - Splitting the data into train and test set(80/20)
@@ -90,6 +94,7 @@ On each dataset is performed simple ML pipeline with 2 different classifiers and
 The classifiers used are:
 - XGBoost
 - LightGBM
+- Random Forest
 
 The pipeline is:
 - Splitting the data into train and test set(80/20)
@@ -152,6 +157,7 @@ The structure of the repository is:
 │   ├── activity_recognition_senior_citizens                                            # Contains the Senior Citizens raw data + explanation
 │   └── activity_recognition_wisdm                                                      # Contains the WISDM raw data + explanation
 ├── notebooks                                                                           # Contains the notebooks(mostly for preprocessing)
+│   ├── datasets_exploration.ipynb                                                      # Contains the datasets exploration
 │   ├── mHealth_preprocessing_less_classes_frequency_features.ipynb                     # Contains the mHealth preprocessing with less classes and frequency features
 │   ├── mHealth_preprocessing.ipynb                                                     # Contains the mHealth preprocessing
 │   ├── senior_citizens_preprocessing_less_classes_frequency_features.ipynb             # Contains the Senior Citizens preprocessing with less classes and frequency features

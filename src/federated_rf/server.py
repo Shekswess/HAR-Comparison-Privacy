@@ -1,17 +1,16 @@
 import argparse
 import os
 import sys
+from typing import Dict, List
 
 import flwr as fl
-from flwr.server.strategy import FedAvg, QFedAvg
+from flwr.server.strategy import FedAvg
 
 sys.path.append(os.path.abspath(os.path.join("..")))
 
-from utils.mlflow_tracking_experiment import (
-    federated_log,
-    set_default_tracking_uri,
-    set_experiment,
-)
+from utils.mlflow_tracking_experiment import (federated_log,
+                                              set_default_tracking_uri,
+                                              set_experiment)
 from utils.vizualizations import plot_metrics
 
 AVERAGE_F1_MACROS = []
@@ -21,7 +20,7 @@ BEST_F1_MACRO = 0
 BEST_ACCURACY = 0
 
 
-def evaluate_metrics_aggregation(eval_metrics):
+def evaluate_metrics_aggregation(eval_metrics: List) -> Dict:
     """
     Aggregate evaluation metrics from all clients.
     :param eval_metrics: List of evaluation metrics from all clients.
@@ -30,12 +29,15 @@ def evaluate_metrics_aggregation(eval_metrics):
     global BEST_ROUND, BEST_F1_MACRO, BEST_ACCURACY
     total_num = sum([num for num, _ in eval_metrics])
     acc_aggregated = (
-        sum([metric["accuracy"] * num for num, metric in eval_metrics]) / total_num
+        sum([metric["accuracy"] * num
+             for num, metric in eval_metrics]) / total_num
     )
     f1_aggregated = (
-        sum([metric["f1_macro"] * num for num, metric in eval_metrics]) / total_num
+        sum([metric["f1_macro"] * num
+             for num, metric in eval_metrics]) / total_num
     )
-    metrics_aggregated = {"accuracy": acc_aggregated, "f1_macro": f1_aggregated}
+    metrics_aggregated = {"accuracy": acc_aggregated,
+                          "f1_macro": f1_aggregated}
     AVERAGE_F1_MACROS.append(f1_aggregated)
     AVERAGE_ACCURACIES.append(acc_aggregated)
     if f1_aggregated > BEST_F1_MACRO:
@@ -50,13 +52,16 @@ if __name__ == "__main__":
     os.makedirs(base_figure_path, exist_ok=True)
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--number-of-clients", type=int, help="Number of clients.", required=True
+        "--number-of-clients", type=int, help="Number of clients.",
+        required=True
     )
     parser.add_argument(
-        "--number-of-rounds", type=int, help="Number of rounds.", required=True
+        "--number-of-rounds", type=int, help="Number of rounds.",
+        required=True
     )
     parser.add_argument(
-        "--experiment-name", type=str, help="Name of the experiment.", required=True
+        "--experiment-name", type=str, help="Name of the experiment.",
+        required=True
     )
     num_clients = parser.parse_args().number_of_clients
     num_rounds_global = parser.parse_args().number_of_rounds

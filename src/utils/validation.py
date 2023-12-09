@@ -1,4 +1,5 @@
 import random
+from typing import List, Union
 
 import pandas as pd
 from lightgbm import LGBMClassifier
@@ -14,7 +15,7 @@ def train_test_validation(
     label_column: str,
     algo_type: str,
     train_ratio: float = 0.8,
-):
+) -> Union[List, List, float, float, List, List]:
     """
     Perform train test validation
     :param data: Dataframe
@@ -35,9 +36,9 @@ def train_test_validation(
 
     subjects = data[subject_column].unique()
     random.seed(42)
-    train_subjects = random.sample(list(subjects), 
+    train_subjects = random.sample(list(subjects),
                                    int(len(subjects) * train_ratio))
-    test_subjects = [subject for subject in subjects 
+    test_subjects = [subject for subject in subjects
                      if subject not in train_subjects]
 
     label_encoder = LabelEncoder()
@@ -76,7 +77,7 @@ def train_test_validation(
 
 def leave_one_subject_out_validation(
     data: pd.DataFrame, subject_column: str, label_column: str, algo_type: str
-):
+) -> Union[List, List, List, float, float]:
     """
     Perform leave one subject out validation
     :param data: Dataframe

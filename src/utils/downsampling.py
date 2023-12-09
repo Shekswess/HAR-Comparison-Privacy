@@ -6,7 +6,7 @@ import pandas as pd
 from scipy import signal
 
 
-def _ffill(_array: Union[np.ndarray, pd.Series]):
+def _ffill(_array: Union[np.ndarray, pd.Series]) -> np.ndarray:
     """
     Function for expanding and array by forward filling the NaN values
     :param _array: contains the array to be expanded
@@ -25,7 +25,7 @@ def downsample_signal(
     fs: float,
     new_sample_rate: float,
     anti_aliasing_filter: str = "iir",
-):
+) -> np.ndarray:
     """
     Downsamples sensor data to a new sample rate using one of several methods
     with optional anti-aliasing filtering.

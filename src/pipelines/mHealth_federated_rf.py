@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.join("..")))
 from utils.mlflow_tracking_experiment import create_experiment
 
 
-def start_server(number_round, number_clients, experiment_name):
+def start_server(number_round: str, number_clients: str, experiment_name: str):
     """
     Starts the server
     :param number_clients: Number of clients
@@ -21,7 +21,7 @@ def start_server(number_round, number_clients, experiment_name):
     )
 
 
-def start_client(dataset_path):
+def start_client(dataset_path: str):
     """
     Starts a client
     :param dataset_path: Path to the dataset
