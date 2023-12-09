@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+from typing import Dict, List
 
 import flwr as fl
 from flwr.server.strategy import FedXgbBagging
@@ -19,7 +20,7 @@ BEST_F1_MACRO = 0
 BEST_ACCURACY = 0
 
 
-def evaluate_metrics_aggregation(eval_metrics):
+def evaluate_metrics_aggregation(eval_metrics: List) -> Dict:
     """
     Aggregate evaluation metrics from all clients.
     :param eval_metrics: List of evaluation metrics from all clients.
@@ -67,7 +68,9 @@ if __name__ == "__main__":
     num_rounds_global = parser.parse_args().number_of_rounds
     experiment_name = parser.parse_args().experiment_name
 
-    set_default_tracking_uri("file:////D:\Work\HAR-Comparison-Privacy\src\pipelines\mlruns")
+    set_default_tracking_uri(
+        "file:////D:\Work\HAR-Comparison-Privacy\src\pipelines\mlruns"
+        )
     set_experiment(experiment_name)
 
     pool_size = num_clients
