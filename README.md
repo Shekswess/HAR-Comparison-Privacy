@@ -1,6 +1,6 @@
 # HAR-Comparison-Privacy
 
-This Repository contains the code for experimenting with 3 different HAR datasets and checking if they can be compared with each other. Also checking if the data can be used for privacy preserving machine learning(federated learning).
+This Repository contains the code for experimenting with 3 different HAR datasets and checking if they can be compared with each other. Also checking if the data can be used for privacy preserving machine learning(federated learning) using Random Forest and FedAve strategy + XGBoost and FedXgbBagging strategy.
 
 ## Datasets
 
